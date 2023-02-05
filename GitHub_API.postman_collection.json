@@ -1,0 +1,704 @@
+{
+	"info": {
+		"_postman_id": "f0e51c7a-644f-4a95-838f-d808a36ee8b0",
+		"name": "GitHub_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get_single_issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP status\", function (){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_issues",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response holds an array of issues\", function() {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type'))\r",
+									"    .equals('application/json; charset=utf-8');\r",
+									"  const json = pm.response.json();\r",
+									"  pm.expect(Array.isArray(json)).equals(true);\r",
+									"  for (let item of json) {\r",
+									"    pm.expect(typeof(item)).equals(\"object\");\r",
+									"    pm.expect(Number.isInteger(item.id)).equals(true);\r",
+									"    pm.expect(typeof(item.title)).equals(\"string\");\r",
+									"  }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_single_comment_from_single_issue",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/1/comments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_comment_from_single_issue",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner\":\"gabcho7\",\r\n  \"repo\":\"postman\",\r\n  \"comment_id\": \"1416737816\",\r\n  \"body\":\"please work\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/1/comments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_invalid_issue#0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP status code: 404\", function(){\r",
+									"    pm.response.to.have.status(404);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									" pm.test(\"Body message matches string\", function () {\r",
+									"            pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+									"        });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/0",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Create_Issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response holds the posted issues\", function() {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type'))\r",
+									"    .equals('application/json; charset=utf-8');\r",
+									"  const requestIssue = JSON.parse(pm.request.body);\r",
+									"  const responseIssue = pm.response.json();\r",
+									"    pm.expect(typeof(responseIssue)).equals(\"object\");\r",
+									"    pm.expect(Number.isInteger(responseIssue.id)).equals(true);\r",
+									"    pm.expect(requestIssue.title).equals(responseIssue.title);\r",
+									"    pm.expect(requestIssue.body).equals(responseIssue.body);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"4th issue\",\r\n    \"body\": \"4th issue body\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_Issue_with_invalid_data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"HTTP status code: 422\", function(){\r",
+									"  pm.response.to.have.status(422);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"body\": \"The title is missing. Only body is given\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_comment_for_Issue",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner\":\"gabcho7\",\r\n  \"repo\":\"postman\",\r\n  \"issue_number\":\"1\",\r\n  \"title\":\"Found a bug\",\r\n  \"body\":\"I'm having a problem with this issue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/1/comments",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "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",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "gabcho7",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "Update_issue",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response holds the updated issue\", function() {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type'))\r",
+									"    .equals('application/json; charset=utf-8');\r",
+									"  const requestIssue = JSON.parse(pm.request.body);\r",
+									"  const responseIssue = pm.response.json();\r",
+									"    pm.expect(typeof(responseIssue)).equals(\"object\");\r",
+									"    pm.expect(Number.isInteger(responseIssue.number)).equals(true);\r",
+									"    pm.expect(Number.isInteger(responseIssue.id)).equals(true);\r",
+									"    pm.expect(requestIssue.tittle).equals(responseIssue.tittle);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner\":\"gabcho7\",\r\n  \"repo\":\"postman\",\r\n  \"issue_number\":\"1\",\r\n  \"title\":\"Found a bug\",\r\n  \"body\":\"I'm having a problem with this issue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_issue_with_invalid_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner\":\"gabcho7\",\r\n  \"repo\":\"postman\",\r\n  \"issue_number\":\"1\",\r\n  \"title\":\"Found a bug\",\r\n  \"body\":\"I'm having a problem with this issue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/0",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_single_comment_from_single_issue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner\":\"gabcho7\",\r\n  \"repo\":\"postman\",\r\n  \"comment_id\": \"1416737816\",\r\n  \"body\":\"please work\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/comments/1416737816",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"comments",
+								"1416737816"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "username",
+						"value": "gabcho7",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "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",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Delete_comment_from_issue",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "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",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "gabcho7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.github.com/repos/gabcho7/postman/issues/comments/1416737816",
+							"protocol": "https",
+							"host": [
+								"api",
+								"github",
+								"com"
+							],
+							"path": [
+								"repos",
+								"gabcho7",
+								"postman",
+								"issues",
+								"comments",
+								"1416737816"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
